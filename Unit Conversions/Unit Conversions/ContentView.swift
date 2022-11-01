@@ -9,15 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
 	@State private var valueToConvert = 0.0
-	@State private var convertedValue = 0.0
-	@State private var unitArray = ["meters", "Km", "feet", "yards", "Miles"]
 	@State private var inputSelected = ""
 	@State private var outputSelected = ""
 	@FocusState private var valueIsFocused: Bool
 	
-	var convertToFeet: Double {
-		let feetConversion = ["meters": 3.28, "Km": 3_280.84, "feet": 1.00, "yards": 3.00, "Miles": 5_280.00]
-
+	let unitArray = ["meters", "Km", "feet", "yards", "Miles"]
+	let feetConversion = ["meters": 3.28, "Km": 3_280.84, "feet": 1.00, "yards": 3.00, "Miles": 5_280.00]
+	
+	var convertedValue: Double {
 		if let x = feetConversion[inputSelected] {
 			if let y = feetConversion[outputSelected] {
 				return(x * valueToConvert / y)
@@ -33,6 +32,8 @@ struct ContentView: View {
 					TextField("Enter amount", value: $valueToConvert, format: .number)
 						.keyboardType(.decimalPad)
 						.focused($valueIsFocused)
+				} header: {
+					Text("Enter a value to convert")
 				}
 				Section {
 					Picker("Convert from:", selection: $inputSelected) {
@@ -55,7 +56,7 @@ struct ContentView: View {
 					Text("Pick a unit to convert to")
 				}
 				Section {
-					Text(convertToFeet, format: .number)
+					Text(convertedValue, format: .number)
 				} header: {
 					Text("Converted value")
 				}
