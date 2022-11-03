@@ -94,7 +94,6 @@ struct ContentView: View {
 			score -= 1
 		}
 		
-		
 		if gameCounter < 8 {
 			gameCounter += 1
 			showingScore.toggle()
