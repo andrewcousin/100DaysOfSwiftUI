@@ -14,7 +14,7 @@ struct ContentView: View {
 	@State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
 	@State private var correctAnswer = Int.random(in: 0...2)
 	@State private var score = 0
-	@State private var gameCounter = 0
+	@State private var gameCounter = 1
 	
 	var body: some View {
 		ZStack {
@@ -60,6 +60,8 @@ struct ContentView: View {
 				Text("Score: \(score)")
 					.font(.title)
 					.foregroundColor(.orange)
+				Text("\(gameCounter)/8")
+					.foregroundColor(.orange)
 				
 				Spacer()
 			}
@@ -92,9 +94,9 @@ struct ContentView: View {
 			score -= 1
 		}
 		
-		gameCounter += 1
 		
 		if gameCounter < 8 {
+			gameCounter += 1
 			showingScore.toggle()
 		} else {
 			resetGame.toggle()
