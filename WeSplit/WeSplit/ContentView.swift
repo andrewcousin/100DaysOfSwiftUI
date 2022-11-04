@@ -32,6 +32,14 @@ struct ContentView: View {
 		return amountPerPerson
 	}
 	
+	var useRedText: Bool {
+		if tipPercentage == 0 {
+			return true
+		} else {
+			return false
+		}
+	}
+	
 	var localCurrency: FloatingPointFormatStyle<Double>.Currency {
 		(.currency(code: Locale.current.currencyCode ?? "USD"))
 	}
@@ -49,6 +57,7 @@ struct ContentView: View {
 							Text("\($0) people")
 						}
 					}
+					
 					Section {
 						Picker("Tip percentage", selection: $tipPercentage) {
 							ForEach(tipPercentages, id: \.self) {
@@ -60,11 +69,14 @@ struct ContentView: View {
 						Text("What % tip do you want to leave?")
 					}
 				}
+				
 				Section {
 					Text(totalAmount, format: localCurrency)
+						.foregroundColor(useRedText ? .red : .primary)
 				} header: {
 					Text("Total Amount")
 				}
+				
 				Section {
 					Text(totalPerPerson, format: localCurrency)
 				} header: {

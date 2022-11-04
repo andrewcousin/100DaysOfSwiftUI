@@ -16,6 +16,13 @@ struct ContentView: View {
 	@State private var score = 0
 	@State private var gameCounter = 1
 	
+	func flagImage(_ number: Int) -> some View {
+		Image(countries[number])
+			.renderingMode(.original)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.shadow(radius: 5)
+	}
+
 	var body: some View {
 		ZStack {
 			LinearGradient(gradient: Gradient(colors: [.orange, .brown, .brown , .black]), startPoint: .top, endPoint: .bottom)
@@ -42,10 +49,7 @@ struct ContentView: View {
 						Button {
 								flagTapped(number)
 						} label: {
-							Image(countries[number])
-								.renderingMode(.original)
-								.clipShape(RoundedRectangle(cornerRadius: 10))
-								.shadow(radius: 5)
+							flagImage(number)
 						}
 					}
 				}
@@ -60,6 +64,7 @@ struct ContentView: View {
 				Text("Score: \(score)")
 					.font(.title)
 					.foregroundColor(.orange)
+				
 				Text("\(gameCounter)/8")
 					.foregroundColor(.orange)
 				
@@ -111,6 +116,24 @@ struct ContentView: View {
 	func askQuestion() {
 		countries.shuffle()
 		correctAnswer = Int.random(in: 0...2)
+	}
+}
+
+//	Create a custom ViewModifier (and accompanying View extension) that makes a view have a large, blue font suitable for prominent titles in a view.
+struct BigOrange: ViewModifier {
+	var text: String
+	
+	func body(content: Content) -> some View {
+		Text(text)
+			.font(.title)
+			.foregroundColor(.orange)
+	}
+	
+}
+
+extension View {
+	func bigOrange(with text: String) -> some View{
+		modifier(BigOrange(text: text))
 	}
 }
 
