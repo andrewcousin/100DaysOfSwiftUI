@@ -28,7 +28,7 @@ struct ContentView: View {
 			LinearGradient(gradient: Gradient(colors: [.orange, .brown, .brown , .black]), startPoint: .top, endPoint: .bottom)
 				.ignoresSafeArea()
 			
-			VStack{
+			VStack {
 				
 				Spacer()
 				
