@@ -22,9 +22,8 @@ struct ContentView: View {
 	@State private var startTitle = "Hit start to begin"
 	@State private var score = 0
 	@State private var gameCounter = 1
-	@State private var appVocab = ["lays down", "serves up", "barrels in with", "smashes down", "gently presents", "suspectfully extends", "charges you with", "hammers in", "suspiciously tries", "lazily tosses in", "confidently throws in"].shuffled()
+	@State private var appVocab = ["lays down", "serves up", "barrels in with", "smashes down", "gently presents", "suspectfully extends", "charges with", "hammers down", "suspiciously tries", "lazily tosses", "confidently throws", "thrust a", "rushes with", "darts in with", "ambushes with", "sneakily shows", "apprehensively reveals"].shuffled()
 	
-	var random = Int.random(in: 0...2)
 	var countdown: String {
 		"\(gameCounter)/10"
 	}
@@ -88,7 +87,6 @@ struct ContentView: View {
 		score = 0
 		gameCounter = 1
 		randomizer()
-		draw = false
 	}
 	
 	var body: some View {
@@ -113,17 +111,13 @@ struct ContentView: View {
 					Spacer()
 					
 					HStack {
-						Text("Computer")
+						Text("iphone")
 							.font(.title)
 							.foregroundColor(.secondary)
 						
 						Text("\(appVocab[0])")
 							.font(.title)
 							.foregroundColor(.primary)
-						
-						Text("a")
-							.font(.title)
-							.foregroundColor(.secondary)
 					}
 					
 					Text("\(appChoices[appChoice])")
@@ -185,7 +179,6 @@ struct ContentView: View {
 					.alert(scoreTitle, isPresented: $resultTitle) {
 						Button("Continue", action: randomizer)
 					} message: {
-//						Text("app choice is \(appChoice) player choice is \(playerChoice)") //debug
 						Text("Your score is \(score)")
 					}
 					
