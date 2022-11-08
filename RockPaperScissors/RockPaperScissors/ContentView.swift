@@ -22,7 +22,7 @@ struct ContentView: View {
 	@State private var startTitle = "Hit start to begin"
 	@State private var score = 0
 	@State private var gameCounter = 1
-	@State private var appVocab = ["lays down", "serves up", "barrels in with", "smashes down", "gently presents", "suspectfully extends", "charges with", "hammers down", "suspiciously tries", "lazily tosses", "confidently throws", "thrust a", "rushes with", "darts in with", "ambushes with", "sneakily shows", "apprehensively reveals"].shuffled()
+	@State private var appVocab = ["lays down", "serves up", "barrels in with", "smashes down", "gently presents", "suspectfully extends", "charges with", "hammers down", "suspiciously tries", "lazily tosses", "confidently throws", "thrust a", "rushes with", "darts in with", "ambushes with", "cautiously shows", "apprehensively reveals"].shuffled()
 	
 	var countdown: String {
 		"\(gameCounter)/10"
