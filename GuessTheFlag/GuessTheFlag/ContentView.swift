@@ -122,7 +122,6 @@ struct ContentView: View {
 		}
 		
 		if gameCounter < 8 {
-			gameCounter += 1
 			showingScore.toggle()
 		} else {
 			resetGame.toggle()
@@ -136,6 +135,7 @@ struct ContentView: View {
 	}
 	
 	func askQuestion() {
+		gameCounter += 1
 		countries.shuffle()
 		correctAnswer = Int.random(in: 0...2)
 		animationAmount = 0.0
