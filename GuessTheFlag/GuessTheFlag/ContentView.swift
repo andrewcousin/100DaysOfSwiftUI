@@ -10,11 +10,19 @@ import SwiftUI
 struct ContentView: View {
 	@State private var showingScore = false
 	@State private var resetGame = false
-	@State private var scoreTitle = ""
+	@State private var enabled = false
+	
 	@State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
+	@State private var scoreTitle = ""
+	
 	@State private var correctAnswer = Int.random(in: 0...2)
-	@State private var score = 0
+	@State private var flagSelected = 0
 	@State private var gameCounter = 1
+	@State private var score = 0
+	
+	@State private var animationAmount = 0.0
+	@State private var scaleAmount = 0.0
+	@State private var opacityAmount = 1.0
 	
 	func flagImage(_ number: Int) -> some View {
 		Image(countries[number])
@@ -45,12 +53,22 @@ struct ContentView: View {
 							.font(.largeTitle.weight(.semibold))
 					}
 					
-					ForEach(0..<3) {number in
+					ForEach(0..<3, id: \.self) {number in
 						Button {
-								flagTapped(number)
+							animationAmount += 360
+							opacityAmount = 0.25
+							flagTapped(number)
+							flagSelected = number
+							enabled = true
 						} label: {
 							flagImage(number)
 						}
+						.rotation3DEffect(.degrees(number == flagSelected ? animationAmount : 0.0), axis: (x: 0, y: 1, z: 0))
+						.animation(.interpolatingSpring(stiffness: 50, damping: 6), value: enabled)
+						.scaleEffect(enabled ? (number == flagSelected ? 1.25 : 1) : 1)
+						.scaleEffect(enabled ? (number != flagSelected ? 0.75 : 1) : 1)
+						.opacity(number != flagSelected ? opacityAmount : 1.0)
+						.animation(.default, value: animationAmount)
 					}
 				}
 				.frame(maxWidth: .infinity)
@@ -85,7 +103,6 @@ struct ContentView: View {
 					Text("Your final score is \(score) You can do better!")
 				}
 			}
-			
 			.padding()
 		}
 	}
@@ -106,7 +123,7 @@ struct ContentView: View {
 			resetGame.toggle()
 		}
 	}
-	
+		
 	func reset() {
 		score = 0
 		gameCounter = 0
@@ -116,6 +133,11 @@ struct ContentView: View {
 	func askQuestion() {
 		countries.shuffle()
 		correctAnswer = Int.random(in: 0...2)
+		animationAmount = 0.0
+		opacityAmount = 1.0
+		scaleAmount = 0.0
+		flagSelected = 0
+		enabled = false
 	}
 }
 
@@ -132,7 +154,7 @@ struct BigOrange: ViewModifier {
 }
 
 extension View {
-	func bigOrange(with text: String) -> some View{
+	func bigOrange(with text: String) -> some View {
 		modifier(BigOrange(text: text))
 	}
 }
