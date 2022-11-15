@@ -136,7 +136,6 @@ struct ContentView: View {
 		animationAmount = 0.0
 		opacityAmount = 1.0
 		scaleAmount = 0.0
-		flagSelected = 0
 		enabled = false
 	}
 }
