@@ -21,7 +21,6 @@ struct ContentView: View {
 	@State private var score = 0
 	
 	@State private var animationAmount = 0.0
-	@State private var scaleAmount = 0.0
 	@State private var opacityAmount = 1.0
 	
 	func flagImage(_ number: Int) -> some View {
@@ -135,7 +134,6 @@ struct ContentView: View {
 		correctAnswer = Int.random(in: 0...2)
 		animationAmount = 0.0
 		opacityAmount = 1.0
-		scaleAmount = 0.0
 		enabled = false
 	}
 }
