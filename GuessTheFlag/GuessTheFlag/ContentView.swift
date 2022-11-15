@@ -11,6 +11,8 @@ struct ContentView: View {
 	@State private var showingScore = false
 	@State private var resetGame = false
 	@State private var enabled = false
+	@State private var correct = false
+	@State private var incorrect = false
 	
 	@State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
 	@State private var scoreTitle = ""
@@ -63,11 +65,13 @@ struct ContentView: View {
 							flagImage(number)
 						}
 						.rotation3DEffect(.degrees(number == flagSelected ? animationAmount : 0.0), axis: (x: 0, y: 1, z: 0))
-						.animation(.interpolatingSpring(stiffness: 50, damping: 6), value: enabled)
-						.scaleEffect(enabled ? (number == flagSelected ? 1.25 : 1) : 1)
+						.animation(.interpolatingSpring(stiffness: 50, damping: 6), value: correct)
+						.scaleEffect(correct ? (enabled ? (number == flagSelected ? 1.25 : 1) : 1) : 1)
 						.scaleEffect(enabled ? (number != flagSelected ? 0.75 : 1) : 1)
 						.opacity(number != flagSelected ? opacityAmount : 1.0)
 						.animation(.default, value: animationAmount)
+						.rotation3DEffect(.degrees(number == flagSelected ? animationAmount : 0.0), axis: (x: 0, y: 1, z: 1))
+						.animation(.interpolatingSpring(stiffness: 100, damping: 10), value: incorrect)
 					}
 				}
 				.frame(maxWidth: .infinity)
@@ -108,9 +112,11 @@ struct ContentView: View {
 	
 	func flagTapped(_ number: Int) {
 		if number == correctAnswer {
+			correct = true
 			scoreTitle = "Correct"
 			score += 1
 		} else {
+			incorrect = true
 			scoreTitle = "Wrong, that's the flag of \(countries[number])"
 			score -= 1
 		}
@@ -135,6 +141,8 @@ struct ContentView: View {
 		animationAmount = 0.0
 		opacityAmount = 1.0
 		enabled = false
+		correct = false
+		incorrect = false
 	}
 }
 
