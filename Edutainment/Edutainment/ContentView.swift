@@ -27,7 +27,7 @@ struct ContentView: View {
 	
 	@State private var answerArray = [""].shuffled()
 	@State private var gameNew = true
-	@State private var gameEnded = false
+	@State private var gameEnded = false //: unused for now
 	@State private var gameStarted = false
 	@State private var gameReset = false
 	@State private var showAlert = false
@@ -116,7 +116,7 @@ struct ContentView: View {
 				.opacity(gameNew ? 1 : 0)
 
 				VStack {
-					HStack { //filled stars if right
+					HStack {
 						if enableStarsRowOne {
 							ForEach(stars, id: \.id) { star in
 								enableStarsRowOne ? Image(star.starType).onAppear{animationAmountTwo = 1}.scaleEffect(animationAmountTwo).animation(.default, value: animationAmountTwo) : Image("star_outline").onAppear{animationAmountTwo = 1}.scaleEffect(animationAmountTwo).animation(.default, value: animationAmountTwo)
@@ -124,14 +124,13 @@ struct ContentView: View {
 						}
 					}
 
-					HStack { //ROW TWO
+					HStack {
 						if enableStarsRowTwo {
 							ForEach(stars2, id: \.id) { star in
 								enableStarsRowTwo ? Image(star.starType).onAppear{animationAmountThree = 1}.scaleEffect(animationAmountThree).animation(.default, value: animationAmountThree) : Image("star_outline").onAppear{animationAmountThree = 1}.scaleEffect(animationAmountThree).animation(.default, value: animationAmountThree)
 							}
 						}
 					}
-					//.animation pop and dangle z axis
 					Spacer()
 					Spacer()
 				}
@@ -175,14 +174,7 @@ struct ContentView: View {
 								} label: {
 									Text(num)
 								}
-								.font(.title2)
-								.padding()
-								.foregroundColor(.secondary)
-								.frame(maxWidth: .infinity, maxHeight: 100)
-								.background(.ultraThinMaterial)
-								.clipShape(Circle())
-								.padding(4)
-								.shadow(radius: 5)
+								.buttonMods()
 							}
 						}
 						.background(.ultraThinMaterial)
@@ -282,7 +274,6 @@ struct ContentView: View {
 		Image(numberImages[number])
 			.renderingMode(.original)
 			.shadow(radius: 1)
-//			.scaleEffect(1.75)
 	}
 	
 	func populate() {
@@ -321,10 +312,14 @@ struct StarID {
 struct ButtonMods: ViewModifier {
 	func body(content: Content) -> some View {
 		content
+			.font(.title2)
 			.padding()
-			.background(.clear)
-			.shadow(radius: 1)
-			.scaleEffect(1.75)
+			.foregroundColor(.secondary)
+			.frame(maxWidth: .infinity, maxHeight: 100)
+			.background(.ultraThinMaterial)
+			.clipShape(Circle())
+			.padding(4)
+			.shadow(radius: 5)
 	}
 }
 
