@@ -157,21 +157,21 @@ struct ContentView: View {
 					
 					VStack(spacing: 20) {
 						HStack(spacing: 10) {
-							ForEach(answerArray, id: \.self) { num in
+							ForEach(answerArray.unique(), id: \.self) { num in
 								Button {
 									playerAnswer = num
-
 									starTrackerRowOne < 10 ? (starTrackerRowOne += 1) : (starTrackerRowTwo += 1)
 									enableStarsRowOne = true
 									if starTrackerRowTwo == 1 { enableStarsRowTwo = true }
+									
 									if starTrackerRowOne < 11 && !enableStarsRowTwo { correctAnswer ? stars.append(StarID(starType: "star")) : stars.append(StarID(starType: "star_outline")) }
+									
 									if enableStarsRowTwo { correctAnswer ? stars2.append(StarID(starType: "star")) : stars2.append(StarID(starType: "star_outline")) }
+									
 									questionIncrement == numberOfQuestions - 1 ? showResetAlert.toggle() : showAlert.toggle()
 									starTrackerRowOne < 10 ? (animationAmountTwo = 2) : (animationAmountTwo = 1)
 									animationAmountThree = 2
 									if correctAnswer { score += 1 }
-									print(correctAnswer)
-									print(answerArray)
 								} label: {
 									Text(num)
 								}
@@ -251,7 +251,6 @@ struct ContentView: View {
 		populate()
 		randomAnswers()
 		alertTitle = ""
-		print(answerArray)
 	}
 	
 	func startOver() {
@@ -260,7 +259,7 @@ struct ContentView: View {
 	}
 	
 	func removal() {
-		question.removeLast(numberOfQuestions - 1)
+		question.removeLast(numberOfQuestions)
 		stars.removeLast(starTrackerRowOne)
 		stars2.removeLast(starTrackerRowTwo)
 	}
@@ -297,8 +296,8 @@ struct ContentView: View {
 	func randomAnswers() {
 		answerArray.removeAll()
 		for _ in 0...2 {
-			let x = Int.random(in: 0...multiplicationValue)
-			let y = Int.random(in: 0...multiplicationValue)
+			let x = Int.random(in: Int.random(in: 1...2)...multiplicationValue)
+			let y = Int.random(in: Int.random(in: 0...2)...multiplicationValue)
 			answerArray.append("\(x * y)")
 		}
 		answerArray.append(String(question[questionIncrement].answer))
@@ -332,6 +331,13 @@ struct ButtonMods: ViewModifier {
 extension View {
 	func buttonMods() -> some View {
 		modifier(ButtonMods())
+	}
+}
+
+extension Sequence where Iterator.Element: Hashable {
+	func unique() -> [Iterator.Element] {
+		var seen: Set<Iterator.Element> = []
+		return filter { seen.insert($0).inserted }
 	}
 }
 
