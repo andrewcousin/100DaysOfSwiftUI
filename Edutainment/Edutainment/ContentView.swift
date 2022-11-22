@@ -23,7 +23,7 @@ struct ContentView: View {
 	@State private var alertTitle = ""
 	@State private var playerAnswer = ""
 	
-	@State private var numberImages = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "cross"]
+	@State private var numberImages = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "cross"] //: unused for now
 	
 	@State private var answerArray = [""].shuffled()
 	@State private var gameNew = true
@@ -270,7 +270,7 @@ struct ContentView: View {
 		return correctAnswer ? "You got it!" : "Nope!"
 	}
 	
-	func numberImage(_ number: Int) -> some View {
+	func numberImage(_ number: Int) -> some View { //:unused for now
 		Image(numberImages[number])
 			.renderingMode(.original)
 			.shadow(radius: 1)
@@ -306,7 +306,6 @@ struct StarID {
 	let id = UUID()
 	let starType: String
 }
-
 
 //MARK: - MODIFIERS
 struct ButtonMods: ViewModifier {
