@@ -322,6 +322,7 @@ struct ButtonMods: ViewModifier {
 	}
 }
 
+//MARK: - EXTENSIONS
 extension View {
 	func buttonMods() -> some View {
 		modifier(ButtonMods())
