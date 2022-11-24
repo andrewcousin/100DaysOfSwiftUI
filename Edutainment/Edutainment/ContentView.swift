@@ -73,10 +73,15 @@ struct ContentView: View {
 					.ignoresSafeArea()
 				VStack {
 					VStack {
-						Text("Multiplication")
+						Text("🧸  Multiplication  🐢")
+							.foregroundStyle(.linearGradient(Gradient(colors: [.secondary, .yellow, .secondary]), startPoint: .leading, endPoint: .trailing))
 							.font(.system(.largeTitle, design: .rounded).bold()).foregroundColor(.secondary)
 							.shadow(radius: 1)
 					}
+					.frame(maxWidth: .infinity, maxHeight: 40)
+					.background(.thinMaterial)
+					.clipShape(RoundedRectangle(cornerRadius: 25))
+					.padding()
 					Spacer()
 					
 					VStack(spacing: 0) {
@@ -206,9 +211,11 @@ struct ContentView: View {
 			
 			.toolbar {
 				ToolbarItem(placement: .navigationBarTrailing) {
-					Button("Start Over", action: startOver)
-						.opacity(gameStarted ? 1 : 0)
-						.foregroundColor(.secondary)
+					if gameStarted {
+						Button("Start Over", action: startOver)
+							.shadow(radius: 10)
+							.foregroundColor(.green)
+					}
 				}
 			}
 		}
@@ -278,8 +285,8 @@ struct ContentView: View {
 	
 	func populate() {
 		for _ in 0...numberOfQuestions - 1 {
-			let x = Int.random(in: 0...multiplicationValue)
-			let y = Int.random(in: 0...multiplicationValue)
+			let x = Int.random(in: Int.random(in: 0...2)...multiplicationValue)
+			let y = Int.random(in: Int.random(in: 0...2)...multiplicationValue)
 			question.append(Question(question: "What is \(x) x \(y) ?", answer: x * y))
 		}
 	}
