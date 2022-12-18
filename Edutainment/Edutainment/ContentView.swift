@@ -73,7 +73,7 @@ struct ContentView: View {
 					.ignoresSafeArea()
 				VStack {
 					VStack {
-						Text("🧸  Multiplication  🐢")
+						Text("Multiplication")
 							.foregroundStyle(.linearGradient(Gradient(colors: [.secondary, .yellow, .secondary]), startPoint: .leading, endPoint: .trailing))
 							.font(.system(.largeTitle, design: .rounded).bold()).foregroundColor(.secondary)
 							.shadow(radius: 1)
